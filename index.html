@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Midnight Indigo Romance</title>
+  <style>
+    :root {
+      --bg1: #1a0b2e;
+      --bg2: #251047;
+      --card: rgba(255, 255, 255, 0.12);
+      --text: #f8f4ff;
+      --muted: #d8cfe9;
+      --accent: #ff5da2;
+      --accent-2: #ff85c2;
+      --shadow: 0 20px 50px rgba(0,0,0,0.35);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: radial-gradient(1200px 800px at 10% 10%, rgba(255, 255, 255, 0.08), transparent 55%),
+                  radial-gradient(1000px 700px at 80% 20%, rgba(255, 92, 170, 0.12), transparent 60%),
+                  linear-gradient(160deg, var(--bg1), var(--bg2));
+      overflow-x: hidden;
+      padding: 24px;
+    }
+
+    .stars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        radial-gradient(2px 2px at 10% 20%, rgba(255,255,255,0.5) 50%, transparent 52%),
+        radial-gradient(1.5px 1.5px at 30% 80%, rgba(255,255,255,0.4) 50%, transparent 52%),
+        radial-gradient(1px 1px at 70% 30%, rgba(255,255,255,0.4) 50%, transparent 52%),
+        radial-gradient(1.5px 1.5px at 90% 70%, rgba(255,255,255,0.35) 50%, transparent 52%),
+        radial-gradient(2px 2px at 55% 55%, rgba(255,255,255,0.5) 50%, transparent 52%);
+      opacity: 0.65;
+      animation: twinkle 6s ease-in-out infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.55; }
+      50% { opacity: 0.9; }
+    }
+
+    .card {
+      width: min(480px, 94vw);
+      background: var(--card);
+      backdrop-filter: blur(14px);
+      border-radius: 24px;
+      padding: 28px 24px 30px;
+      box-shadow: var(--shadow);
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.18);
+      position: relative;
+      overflow: hidden;
+      animation: floatIn 0.6s ease;
+    }
+
+    @keyframes floatIn {
+      from { transform: translateY(16px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .badge {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      font-size: 12px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.2);
+      color: var(--muted);
+      letter-spacing: 0.4px;
+      margin-bottom: 18px;
+    }
+
+    .hero {
+      width: 160px;
+      height: 160px;
+      border-radius: 18px;
+      object-fit: cover;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+      margin: 0 auto 18px;
+      border: 2px solid rgba(255,255,255,0.35);
+    }
+
+    h1 {
+      font-size: 24px;
+      margin: 6px 0 10px;
+      line-height: 1.3;
+    }
+
+    .subtext {
+      font-size: 15px;
+      color: var(--muted);
+      margin-bottom: 22px;
+    }
+
+    .button-row {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      align-items: center;
+      min-height: 72px;
+    }
+
+    button {
+      border: none;
+      font-size: 16px;
+      font-weight: 600;
+      padding: 14px 22px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+      min-height: 46px;
+      min-width: 120px;
+    }
+
+    .yes {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #fff;
+      box-shadow: 0 12px 25px rgba(255, 93, 162, 0.4);
+    }
+
+    .no {
+      background: rgba(255,255,255,0.15);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.25);
+    }
+
+    .trust {
+      margin-top: 14px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.6);
+    }
+
+    .success {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .success h2 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    .typed {
+      font-size: 16px;
+      line-height: 1.6;
+      min-height: 150px;
+      white-space: pre-line;
+    }
+
+    .plan {
+      width: 100%;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 16px;
+      padding: 14px 16px;
+      text-align: left;
+      font-size: 14px;
+      color: var(--muted);
+      box-shadow: inset 0 0 20px rgba(255,255,255,0.05);
+    }
+
+    .plan strong {
+      color: var(--text);
+    }
+
+    .confetti {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 2;
+    }
+
+    .confetti span {
+      position: absolute;
+      width: 10px;
+      height: 14px;
+      background: var(--accent);
+      opacity: 0.9;
+      border-radius: 2px;
+      animation: fall 2.6s linear infinite;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(-10vh) rotate(0deg); }
+      100% { transform: translateY(110vh) rotate(360deg); }
+    }
+
+    .wiggle {
+      animation: wiggle 0.4s ease;
+    }
+
+    @keyframes wiggle {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-4px); }
+      50% { transform: translateX(4px); }
+      75% { transform: translateX(-2px); }
+    }
+
+    @media (max-width: 420px) {
+      h1 { font-size: 22px; }
+      .hero { width: 140px; height: 140px; }
+      button { min-width: 110px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+  <div class="card" id="card">
+    <div id="ask">
+      <div class="badge">Private link for Ukho 💘</div>
+      <img class="hero" id="heroImage" alt="Cute valentines" />
+      <h1 id="question"></h1>
+      <div class="subtext" id="subtext"></div>
+      <div class="button-row" id="buttonRow">
+        <button class="yes" id="yesBtn">YES</button>
+        <button class="no" id="noBtn">No</button>
+      </div>
+      <div class="trust">(Just a cute page — no downloads, no weird stuff)</div>
+    </div>
+
+    <div class="success" id="success">
+      <img class="hero" id="winImage" alt="Celebration" />
+      <h2 id="successTitle"></h2>
+      <div class="typed" id="typed"></div>
+      <div class="plan" id="plan"></div>
+    </div>
+  </div>
+
+  <div class="confetti" id="confetti"></div>
+
+  <script>
+    const config = {
+      herName: "Ukho",
+      questionText: "Ukho… will you be my Valentine? 💘",
+      subText: "Be honest… but choose wisely 😈",
+      noPhrases: [
+        "No",
+        "Are you sure, Ukho? 😭",
+        "Hayi man… don’t do me like that 🥺",
+        "Think again, pretty girl 💅",
+        "I’m literally your man… 😮‍💨",
+        "Stop acting tough 😈",
+        "Ukho… I’m begging but in a sexy way 😭",
+        "Last chance…",
+        "Okay you’re just teasing 😌",
+        "Cool. YES it is."
+      ],
+      images: {
+        ask: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80",
+        sad: "https://images.unsplash.com/photo-1514516870926-206c5f1e2fd1?auto=format&fit=crop&w=600&q=80",
+        win: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=80"
+      },
+      successTitle: "YAYYYY!!! 💖",
+      typedLines: [
+        "Ukho… you make my world quieter in the best way 😮‍💨",
+        "I don’t want options. I want YOU.",
+        "So yes, I’m asking properly… 💘",
+        "This Saturday… I want us together for Valentine’s. Just you and me, the whole day 😭❤️",
+        "We’re gonna enjoy ourselves properly—laugh, eat, take pics, everything 😌",
+        "Now stop playing and come claim your flowers 😈💝",
+        "Your boyfriend, Siba🫶"
+      ],
+      plan: {
+        time: "6:00 PM",
+        place: "Your favorite spot",
+        dress: "Soft glam",
+        surprise: "Hidden"
+      }
+    };
+
+    const question = document.getElementById("question");
+    const subtext = document.getElementById("subtext");
+    const heroImage = document.getElementById("heroImage");
+    const winImage = document.getElementById("winImage");
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const ask = document.getElementById("ask");
+    const success = document.getElementById("success");
+    const successTitle = document.getElementById("successTitle");
+    const typed = document.getElementById("typed");
+    const plan = document.getElementById("plan");
+    const confetti = document.getElementById("confetti");
+
+    let noCount = 0;
+
+    question.textContent = config.questionText;
+    subtext.textContent = config.subText;
+    heroImage.src = config.images.ask;
+    winImage.src = config.images.win;
+    successTitle.textContent = config.successTitle;
+
+    const updatePlan = () => {
+      plan.innerHTML = `
+        <div><strong>Time:</strong> ${config.plan.time}</div>
+        <div><strong>Place:</strong> ${config.plan.place}</div>
+        <div><strong>Dress code:</strong> ${config.plan.dress}</div>
+        <div><strong>Surprise:</strong> ${config.plan.surprise}</div>
+      `;
+    };
+    updatePlan();
+
+    const growYes = () => {
+      const scale = 1 + noCount * 0.18;
+      yesBtn.style.transform = `scale(${Math.min(scale, 2.6)})`;
+      yesBtn.style.boxShadow = `0 12px 30px rgba(255, 93, 162, ${0.35 + noCount * 0.05})`;
+    };
+
+    const wiggleNo = () => {
+      noBtn.classList.remove("wiggle");
+      void noBtn.offsetWidth;
+      noBtn.classList.add("wiggle");
+    };
+
+    const maybeSwapImage = () => {
+      if (config.images.sad && noCount >= 5) {
+        heroImage.src = config.images.sad;
+      }
+    };
+
+    const maybeHideNo = () => {
+      if (noCount >= config.noPhrases.length - 1) {
+        noBtn.style.transform = "scale(0.1)";
+        noBtn.style.opacity = "0";
+        noBtn.style.pointerEvents = "none";
+      }
+    };
+
+    noBtn.addEventListener("click", () => {
+      noCount += 1;
+      const nextPhrase = config.noPhrases[Math.min(noCount, config.noPhrases.length - 1)];
+      noBtn.textContent = nextPhrase;
+      growYes();
+      maybeSwapImage();
+      if (noCount >= 4) {
+        wiggleNo();
+        const nudge = (Math.random() * 10 - 5).toFixed(0);
+        noBtn.style.transform = `translateX(${nudge}px)`;
+      }
+      maybeHideNo();
+    });
+
+    const startConfetti = () => {
+      confetti.innerHTML = "";
+      const colors = ["#ff5da2", "#ffd1e8", "#9b5cff", "#ffd166", "#8ef9f3"];
+      for (let i = 0; i < 60; i += 1) {
+        const piece = document.createElement("span");
+        const left = Math.random() * 100;
+        const delay = Math.random() * 2;
+        const size = 6 + Math.random() * 6;
+        piece.style.left = `${left}%`;
+        piece.style.animationDelay = `${delay}s`;
+        piece.style.background = colors[i % colors.length];
+        piece.style.width = `${size}px`;
+        piece.style.height = `${size + 4}px`;
+        confetti.appendChild(piece);
+      }
+      setTimeout(() => {
+        confetti.innerHTML = "";
+      }, 5000);
+    };
+
+    const typeLines = async () => {
+      typed.textContent = "";
+      for (const line of config.typedLines) {
+        for (const char of line) {
+          typed.textContent += char;
+          await new Promise((resolve) => setTimeout(resolve, 25));
+        }
+        typed.textContent += "\n";
+        await new Promise((resolve) => setTimeout(resolve, 450));
+      }
+    };
+
+    yesBtn.addEventListener("click", () => {
+      ask.style.display = "none";
+      success.style.display = "flex";
+      startConfetti();
+      typeLines();
+    });
+  </script>
+</body>
+</html>
