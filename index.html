@@ -22,13 +22,14 @@
       font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
       color: var(--text);
       min-height: 100vh;
-      display: grid;
-      place-items: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       background: radial-gradient(1200px 800px at 10% 10%, rgba(255, 255, 255, 0.08), transparent 55%),
                   radial-gradient(1000px 700px at 80% 20%, rgba(255, 92, 170, 0.12), transparent 60%),
                   linear-gradient(160deg, var(--bg1), var(--bg2));
       overflow-x: hidden;
-      padding: 24px;
+      padding: 16px;
     }
 
     .stars {
@@ -51,7 +52,9 @@
     }
 
     .card {
-      width: min(480px, 94vw);
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
       background: var(--card);
       backdrop-filter: blur(14px);
       border-radius: 24px;
@@ -82,7 +85,7 @@
       margin-bottom: 18px;
     }
 
-    /* NEW: bigger + centered where image used to be */
+    /* bigger + centered where image used to be */
     .badge-mid {
       display: inline-flex;
       align-items: center;
@@ -227,6 +230,7 @@
     }
 
     @media (max-width: 420px) {
+      body { padding: 12px; }
       h1 { font-size: 22px; }
       button { min-width: 110px; }
       .badge-mid { font-size: 13px; }
@@ -237,7 +241,6 @@
   <div class="stars"></div>
   <div class="card" id="card">
     <div id="ask">
-      <!-- moved + slightly bigger -->
       <div class="badge-mid">This link is exclusively for you Mommy🥺</div>
 
       <!-- image removed -->
