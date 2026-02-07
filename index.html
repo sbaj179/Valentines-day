@@ -82,6 +82,21 @@
       margin-bottom: 18px;
     }
 
+    /* NEW: bigger + centered where image used to be */
+    .badge-mid {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      padding: 10px 16px;
+      margin: 8px auto 18px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.2);
+      color: var(--muted);
+      letter-spacing: 0.4px;
+      max-width: 100%;
+    }
+
     .hero {
       width: 160px;
       height: 160px;
@@ -213,8 +228,8 @@
 
     @media (max-width: 420px) {
       h1 { font-size: 22px; }
-      .hero { width: 140px; height: 140px; }
       button { min-width: 110px; }
+      .badge-mid { font-size: 13px; }
     }
   </style>
 </head>
@@ -222,8 +237,12 @@
   <div class="stars"></div>
   <div class="card" id="card">
     <div id="ask">
-      <div class="badge">This link is exclusively for you Mommy🥺</div>
-      <img class="hero" id="heroImage" alt="Ukho" />
+      <!-- moved + slightly bigger -->
+      <div class="badge-mid">This link is exclusively for you Mommy🥺</div>
+
+      <!-- image removed -->
+      <!-- <img class="hero" id="heroImage" alt="Ukho" /> -->
+
       <h1 id="question"></h1>
       <div class="subtext" id="subtext"></div>
       <div class="button-row" id="buttonRow">
@@ -234,7 +253,9 @@
     </div>
 
     <div class="success" id="success">
-      <img class="hero" id="winImage" alt="Celebration" />
+      <!-- image removed -->
+      <!-- <img class="hero" id="winImage" alt="Celebration" /> -->
+
       <h2 id="successTitle"></h2>
       <div class="typed" id="typed"></div>
       <div class="plan" id="plan"></div>
@@ -285,8 +306,6 @@
 
     const question = document.getElementById("question");
     const subtext = document.getElementById("subtext");
-    const heroImage = document.getElementById("heroImage");
-    const winImage = document.getElementById("winImage");
     const yesBtn = document.getElementById("yesBtn");
     const noBtn = document.getElementById("noBtn");
     const ask = document.getElementById("ask");
@@ -300,8 +319,6 @@
 
     question.textContent = config.questionText;
     subtext.textContent = config.subText;
-    heroImage.src = config.images.ask;
-    winImage.src = config.images.win;
     successTitle.textContent = config.successTitle;
 
     const updatePlan = () => {
@@ -326,12 +343,6 @@
       noBtn.classList.add("wiggle");
     };
 
-    const maybeSwapImage = () => {
-      if (config.images.sad && noCount >= 5) {
-        heroImage.src = config.images.sad;
-      }
-    };
-
     const maybeHideNo = () => {
       if (noCount >= config.noPhrases.length - 1) {
         noBtn.style.transform = "scale(0.1)";
@@ -345,7 +356,6 @@
       const nextPhrase = config.noPhrases[Math.min(noCount, config.noPhrases.length - 1)];
       noBtn.textContent = nextPhrase;
       growYes();
-      maybeSwapImage();
       if (noCount >= 4) {
         wiggleNo();
         const nudge = (Math.random() * 10 - 5).toFixed(0);
@@ -395,4 +405,5 @@
   </script>
 </body>
 </html>
+
 
