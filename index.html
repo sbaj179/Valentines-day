@@ -72,20 +72,6 @@
       to { transform: translateY(0); opacity: 1; }
     }
 
-    .badge {
-      display: inline-flex;
-      gap: 8px;
-      align-items: center;
-      font-size: 12px;
-      padding: 6px 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.2);
-      color: var(--muted);
-      letter-spacing: 0.4px;
-      margin-bottom: 18px;
-    }
-
-    /* bigger + centered where image used to be */
     .badge-mid {
       display: inline-flex;
       align-items: center;
@@ -98,17 +84,12 @@
       color: var(--muted);
       letter-spacing: 0.4px;
       max-width: 100%;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.2s ease, background 0.2s ease;
     }
-
-    .hero {
-      width: 160px;
-      height: 160px;
-      border-radius: 18px;
-      object-fit: cover;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
-      margin: 0 auto 18px;
-      border: 2px solid rgba(255,255,255,0.35);
-    }
+    .badge-mid:active { transform: scale(0.98); }
+    .badge-mid:hover { background: rgba(255,255,255,0.24); }
 
     h1 {
       font-size: 24px;
@@ -172,6 +153,34 @@
       font-size: 28px;
     }
 
+    /* Heart under the title */
+    .heart {
+      display: none;
+      font-size: 68px;
+      line-height: 1;
+      margin: -2px 0 6px;
+      filter: drop-shadow(0 10px 20px rgba(0,0,0,0.35));
+      user-select: none;
+    }
+
+    .heart.beat {
+      display: block;
+      animation: popIn 0.55s ease, heartbeat 1.3s ease-in-out infinite 0.6s;
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.6); opacity: 0; }
+      70% { transform: scale(1.15); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      25% { transform: scale(1.06); }
+      50% { transform: scale(0.98); }
+      75% { transform: scale(1.04); }
+    }
+
     .typed {
       font-size: 16px;
       line-height: 1.6;
@@ -191,10 +200,52 @@
       box-shadow: inset 0 0 20px rgba(255,255,255,0.05);
     }
 
-    .plan strong {
-      color: var(--text);
+    .plan strong { color: var(--text); }
+
+    /* Screenshot stamp */
+    .stamp {
+      display: none;
+      width: 100%;
+      margin-top: 10px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.22);
+      box-shadow: inset 0 0 20px rgba(255,255,255,0.05);
     }
 
+    .stamp .big {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .stamp .small {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* Seal it button */
+    .cta {
+      display: none;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .cta button {
+      width: 100%;
+      min-width: 0;
+      background: linear-gradient(135deg, rgba(255,93,162,0.95), rgba(255,133,194,0.95));
+      color: #fff;
+      box-shadow: 0 12px 25px rgba(255, 93, 162, 0.38);
+    }
+
+    .cta button:active { transform: scale(0.99); }
+
+    /* Confetti */
     .confetti {
       position: fixed;
       inset: 0;
@@ -218,9 +269,7 @@
       100% { transform: translateY(110vh) rotate(360deg); }
     }
 
-    .wiggle {
-      animation: wiggle 0.4s ease;
-    }
+    .wiggle { animation: wiggle 0.4s ease; }
 
     @keyframes wiggle {
       0%, 100% { transform: translateX(0); }
@@ -229,49 +278,90 @@
       75% { transform: translateX(-2px); }
     }
 
+    /* Cute toast for Easter egg */
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 22px;
+      transform: translateX(-50%);
+      background: rgba(10, 6, 18, 0.75);
+      border: 1px solid rgba(255,255,255,0.18);
+      color: var(--text);
+      padding: 12px 14px;
+      border-radius: 14px;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+      backdrop-filter: blur(10px);
+      width: min(420px, 92vw);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      z-index: 10;
+      text-align: center;
+      font-size: 13px;
+      color: rgba(255,255,255,0.92);
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(-6px);
+    }
+
     @media (max-width: 420px) {
       body { padding: 12px; }
       h1 { font-size: 22px; }
       button { min-width: 110px; }
       .badge-mid { font-size: 13px; }
+      .heart { font-size: 60px; }
     }
   </style>
 </head>
 <body>
   <div class="stars"></div>
+
   <div class="card" id="card">
     <div id="ask">
-      <div class="badge-mid">This link is exclusively for you Mommy🥺</div>
-
-      <!-- image removed -->
-      <!-- <img class="hero" id="heroImage" alt="Ukho" /> -->
+      <div class="badge-mid" id="badgeMid">This is exclusively for you Mommy🥺</div>
 
       <h1 id="question"></h1>
       <div class="subtext" id="subtext"></div>
+
       <div class="button-row" id="buttonRow">
         <button class="yes" id="yesBtn">YES</button>
         <button class="no" id="noBtn">No</button>
       </div>
-      <div class="trust">(Just a cute page — no downloads, no weird stuff)</div>
+
+      <div class="trust">(I built this just for you🥹 took me 5+ hours but i'll do anything for you🥹)</div>
     </div>
 
     <div class="success" id="success">
-      <!-- image removed -->
-      <!-- <img class="hero" id="winImage" alt="Celebration" /> -->
-
       <h2 id="successTitle"></h2>
+      <div class="heart" id="heart" aria-hidden="true">❤️</div>
+
       <div class="typed" id="typed"></div>
+
       <div class="plan" id="plan"></div>
+
+      <!-- Screenshot stamp (appears after typing finishes) -->
+      <div class="stamp" id="stamp">
+        <div class="big">Oh so you wanna spend your day with me?? That's so cute🥹</div>
+        <div class="small">Well then we are on for the 14th mommy🥹 (You're loved, as always🥹)</div>
+      </div>
+
+      <!-- Seal it CTA (appears after typing finishes) -->
+      <div class="cta" id="cta">
+        <button id="sealBtn">Let’s make our plans official 🥹</button>
+      </div>
     </div>
   </div>
 
   <div class="confetti" id="confetti"></div>
+  <div class="toast" id="toast"></div>
 
   <script>
     const config = {
       herName: "Ukho",
       questionText: "Ukho… will you be my Valentine? 🥺",
-      subText: "Be honest… but choose wisely 😈",
+      subText: "Be honest… but choose wisely 😝",
       noPhrases: [
         "No",
         "Are you sure, Ukho? 😭",
@@ -284,14 +374,10 @@
         "Okay you’re just teasing 😌",
         "Cool. YES it is."
       ],
-      images: {
-        ask: "assets/ukho.jpg",
-        sad: "https://images.unsplash.com/photo-1514516870926-206c5f1e2fd1?auto=format&fit=crop&w=600&q=80",
-        win: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=80"
-      },
-      successTitle: "YAYYYY!!! 💖",
+      successTitle: "YAYYYY!!! 😝",
       typedLines: [
-        "Ukho… you make my world quieter in the best way 🥺",
+        "I knew you’d say yes… that’s why I love you 🥹",
+        "You know i love you right?? I have done so since July 5th 2025 🥺",
         "I don’t want options. I want YOU 🥺",
         "So yes, I’m asking properly… 🥹",
         "This Saturday… I want us together for Valentine’s. Just you and me, the whole day 🥹",
@@ -304,8 +390,13 @@
         place: "Your place of choosing… I’m just following you 😌",
         dress: "Anything you choose — be sexy as always 😝",
         surprise: "Hidden😉"
-      }
+      },
+      easterEggText: "Stop pressing things… come press Daddy instead 🥺",
+      whatsappPrefill: "You wanna spend your Saturday with me? I promise i'll make it feel special🥺"
     };
+
+    const badgeMid = document.getElementById("badgeMid");
+    const toast = document.getElementById("toast");
 
     const question = document.getElementById("question");
     const subtext = document.getElementById("subtext");
@@ -314,11 +405,18 @@
     const ask = document.getElementById("ask");
     const success = document.getElementById("success");
     const successTitle = document.getElementById("successTitle");
+    const heart = document.getElementById("heart");
+
     const typed = document.getElementById("typed");
     const plan = document.getElementById("plan");
     const confetti = document.getElementById("confetti");
 
+    const stamp = document.getElementById("stamp");
+    const cta = document.getElementById("cta");
+    const sealBtn = document.getElementById("sealBtn");
+
     let noCount = 0;
+    let toastTimer = null;
 
     question.textContent = config.questionText;
     subtext.textContent = config.subText;
@@ -333,6 +431,16 @@
       `;
     };
     updatePlan();
+
+    const showToast = (msg) => {
+      toast.textContent = msg;
+      toast.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove("show"), 2200);
+    };
+
+    // Easter egg
+    badgeMid.addEventListener("click", () => showToast(config.easterEggText));
 
     const growYes = () => {
       const scale = 1 + noCount * 0.18;
@@ -358,12 +466,15 @@
       noCount += 1;
       const nextPhrase = config.noPhrases[Math.min(noCount, config.noPhrases.length - 1)];
       noBtn.textContent = nextPhrase;
+
       growYes();
-      if (noCount >= 4) {
+
+      if (noCount >= 3) {
         wiggleNo();
-        const nudge = (Math.random() * 10 - 5).toFixed(0);
+        const nudge = (Math.random() * 12 - 6).toFixed(0);
         noBtn.style.transform = `translateX(${nudge}px)`;
       }
+
       maybeHideNo();
     });
 
@@ -382,13 +493,14 @@
         piece.style.height = `${size + 4}px`;
         confetti.appendChild(piece);
       }
-      setTimeout(() => {
-        confetti.innerHTML = "";
-      }, 5000);
+      setTimeout(() => { confetti.innerHTML = ""; }, 5000);
     };
 
     const typeLines = async () => {
       typed.textContent = "";
+      stamp.style.display = "none";
+      cta.style.display = "none";
+
       for (const line of config.typedLines) {
         for (const char of line) {
           typed.textContent += char;
@@ -397,11 +509,38 @@
         typed.textContent += "\n";
         await new Promise((resolve) => setTimeout(resolve, 450));
       }
+
+      // After typing finishes: show stamp + CTA
+      stamp.style.display = "block";
+      cta.style.display = "block";
     };
+
+    // Seal it: open WhatsApp with prefilled message (lets her pick chat / you)
+    const openWhatsAppPrefill = () => {
+      const msg = encodeURIComponent(config.whatsappPrefill);
+
+      // Mobile app first (best UX)
+      const appLink = `whatsapp://send?text=${msg}`;
+
+      // Web fallback
+      const webLink = `https://wa.me/?text=${msg}`;
+
+      // Try app; if it fails, browser will do nothing—fallback quickly to web
+      window.location.href = appLink;
+      setTimeout(() => {
+        window.location.href = webLink;
+      }, 500);
+    };
+
+    sealBtn.addEventListener("click", openWhatsAppPrefill);
 
     yesBtn.addEventListener("click", () => {
       ask.style.display = "none";
       success.style.display = "flex";
+
+      // Heart reveal
+      heart.classList.add("beat");
+
       startConfetti();
       typeLines();
     });
